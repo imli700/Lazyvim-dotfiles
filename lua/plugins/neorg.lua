@@ -15,6 +15,7 @@ return {
               communicationSkills = "~/Documents/zettelkasten-notes/2-semester/communication-skills/",
               problemSolvingAndProgramming = "~/Documents/zettelkasten-notes/2-semester/problem-solving-and-programming/",
               computerOrganisationAndAssemblyLanguageProgramming = "~/Documents/zettelkasten-notes/2-semester/computer-organisation-and-assembly-language-programming/",
+              cs50 = "~/Documents/zettelkasten-notes/cs50/",
             },
             default_workspace = "top",
           },
