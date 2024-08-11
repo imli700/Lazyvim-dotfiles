@@ -12,9 +12,12 @@ return {
           config = {
             workspaces = {
               top = "~/Documents/zettelkasten-notes/top/",
-              communicationSkills = "~/Documents/zettelkasten-notes/2-semester/communication-skills/",
-              problemSolvingAndProgramming = "~/Documents/zettelkasten-notes/2-semester/problem-solving-and-programming/",
-              computerOrganisationAndAssemblyLanguageProgramming = "~/Documents/zettelkasten-notes/2-semester/computer-organisation-and-assembly-language-programming/",
+              NlpAndAi = "~/Documents/zettelkasten-notes/3-semester/nlp-and-ai/",
+              evs = "~/Documents/zettelkasten-notes/3-semester/evs/",
+              dbms = "~/Documents/zettelkasten-notes/3-semester/dbms/",
+              pythonProgramming = "~/Documents/zettelkasten-notes/3-semester/pythong-programming",
+              pythonLab = "~/Documents/zettelkasten-notes/3-semester/python-lab",
+              dataStructure = "~/Documents/zettelkasten-notes/3-semester/data-structure",
               cs50 = "~/Documents/zettelkasten-notes/cs50/",
             },
             default_workspace = "top",
