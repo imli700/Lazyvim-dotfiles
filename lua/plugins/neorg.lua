@@ -12,6 +12,7 @@ return {
           config = {
             workspaces = {
               top = "~/Documents/zettelkasten-notes/top/",
+              swayam = "~/Documents/zettelkasten-notes/swayam/",
               NlpAndAi = "~/Documents/zettelkasten-notes/3-semester/nlp-and-ai/",
               evs = "~/Documents/zettelkasten-notes/3-semester/evs/",
               dbms = "~/Documents/zettelkasten-notes/3-semester/dbms/",
