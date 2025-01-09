@@ -17,7 +17,7 @@ return {
               iot = "~/Documents/zettelkasten-notes/4th-sem/iot/",
               iotLab = "~/Documents/zettelkasten-notes/4th-sem/iotLab",
               philosophy = "~/Documents/zettelkasten-notes/4th-sem/philosophy/",
-              javaP = "~/Documents/zettelkasten-notes/4th-sem/javaProgramming/",
+              javaProgramming = "~/Documents/zettelkasten-notes/4th-sem/javaProgramming/",
               softwareEngineerig = "~/Documents/zettelkasten-notes/4th-sem/softwareEngineering/",
             },
             default_workspace = "top",
