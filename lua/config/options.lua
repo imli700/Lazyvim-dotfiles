@@ -16,3 +16,10 @@ vim.cmd([[
     highlight Normal ctermbg=none guibg=none
     highlight NonText ctermbg=none guibg=none
 ]])
+
+vim.api.nvim_set_keymap(
+  "n", -- Normal mode
+  "<C-t>", -- The keybinding
+  "<Plug>(neorg.qol.todo-items.todo.task-cycle)", -- The Neorg plug key
+  { noremap = false, silent = true } -- `noremap` must be false to allow `<Plug>` mappings
+)
