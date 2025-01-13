@@ -19,6 +19,7 @@ return {
               philosophy = "~/Documents/zettelkasten-notes/4th-sem/philosophy/",
               javaProgramming = "~/Documents/zettelkasten-notes/4th-sem/javaProgramming/",
               softwareEngineerig = "~/Documents/zettelkasten-notes/4th-sem/softwareEngineering/",
+              probabilityAndStatistics = "~/Documents/zettelkasten-notes/4th-sem/probabilityAndStatistics/",
             },
             default_workspace = "top",
           },
