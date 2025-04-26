@@ -8,6 +8,7 @@ return {
       "html",
       "css",
       "lua",
+      "norg",
       -- add any other *always wanted* parsers here
     })
   end,
