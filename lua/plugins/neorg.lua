@@ -18,7 +18,7 @@ return {
               cloudComputing = "~/Documents/zettelkasten-notes/5th-sem/cloud-computing/",
               dataMining = "~/Documents/zettelkasten-notes/5th-sem/data-mining/",
               foundationOfMachineLearning = "~/Documents/zettelkasten-notes/5th-sem/foundation-of-machine-learning/",
-              elective1 = "~/Documents/zettelkasten-notes/5th-sem/elective-1/",
+              mobileComputing = "~/Documents/zettelkasten-notes/5th-sem/mobile-computing/",
               machineLearningLab = "~/Documents/zettelkasten-notes/5th-sem/machine-learning-lab/",
               projects = "~/Documents/zettelkasten-notes/5th-sem/projects/",
             },
