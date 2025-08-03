@@ -12,7 +12,8 @@ return {
           config = {
             workspaces = {
               top = "~/Documents/zettelkasten-notes/top/",
-              swayam = "~/Documents/zettelkasten-notes/swayam/",
+              essentialMathematicsForMachineLearning = "~/Documents/zettelkasten-notes/swayam/essential-mathematics-for-machine-learning",
+              ethicalHacking = "~/Documents/zettelkasten-notes/swayam/ethicalHacking",
               cs50 = "~/Documents/zettelkasten-notes/cs50/",
               advanedWebTechnologies = "~/Documents/zettelkasten-notes/5th-sem/advanced-web-technologies/",
               cloudComputing = "~/Documents/zettelkasten-notes/5th-sem/cloud-computing/",
