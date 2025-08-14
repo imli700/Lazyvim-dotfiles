@@ -1,8 +1,11 @@
+-- In your existing Neorg plugin file (e.g., lua/plugins/neorg.lua)
 return {
   "nvim-neorg/neorg",
   lazy = false,
   version = "*",
-  dependencies = { "vhyrro/luarocks.nvim" },
+  dependencies = {
+    "vhyrro/luarocks.nvim",
+  },
   config = function()
     require("neorg").setup({
       load = {
@@ -25,6 +28,17 @@ return {
               projects = "~/Documents/zettelkasten-notes/5th-sem/projects/",
             },
             default_workspace = "top",
+          },
+        },
+        -- ADD THIS SECTION FOR LATEX RENDERING
+        ["core.latex.renderer"] = {
+          config = {
+            -- Automatically render images when you open a .norg file
+            render_on_enter = true,
+            -- Higher DPI for crisper images
+            dpi = 400,
+            -- Conceal the source LaTeX code with the rendered image
+            conceal = true,
           },
         },
       },
