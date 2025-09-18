@@ -14,6 +14,7 @@ return {
       "svelte",
       "typst",
       "vue",
+      "org",
       -- add any other *always wanted* parsers here
     })
   end,

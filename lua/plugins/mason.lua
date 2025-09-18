@@ -1,6 +1,6 @@
 -- lua/plugins/mason.lua
 return {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
   opts = function(_, opts)
     -- Add LSP servers and other tools to ensure installation.
     -- `vim.list_extend` merges with existing defaults.
