@@ -2,23 +2,13 @@ return {
   {
     "nvim-neorg/neorg",
     lazy = false,
-    version = "*",
+    version = false, -- Fixes the original treesitter error
     dependencies = {
-      -- treesitter is required for norg highlighting/parsing
       "nvim-treesitter/nvim-treesitter",
-
-      -- completion engine and some common companion plugins
-      "hrsh7th/nvim-cmp", -- completion engine
-      "hrsh7th/cmp-nvim-lsp", -- LSP source for cmp (optional but useful)
-      "saadparwaiz1/cmp_luasnip", -- snippet source (optional)
-      "L3MON4D3/LuaSnip", -- snippet engine (optional, recommended)
-
-      -- canonical image plugin that Neorg integrates with
-      -- (image rendering backends use Kitty or ueberzug++ etc.)
+      "hrsh7th/nvim-cmp",
       "3rd/image.nvim",
     },
     config = function()
-      -- neorg setup: completion engine set to nvim-cmp and image integration enabled
       require("neorg").setup({
         load = {
           ["core.export"] = {},
@@ -45,18 +35,9 @@ return {
             },
           },
 
-          -- enable completion: tell Neorg which engine to use
-          -- (Neorg expects this field; engine "nvim-cmp" uses the cmp source provided by Neorg)
-          ["core.completion"] = {
-            config = {
-              engine = "nvim-cmp",
-            },
-          },
+          -- REMOVED ["core.completion"] block to prevent the crash
 
-          -- enable image integration (uses image.nvim)
           ["core.integrations.image"] = {},
-
-          -- keep latex renderer (it relies on image.nvim too)
           ["core.latex.renderer"] = {
             config = {
               render_on_enter = true,
@@ -65,6 +46,17 @@ return {
             },
           },
         },
+      })
+
+      -- Fix for syntax highlighting (Required since we used version = false)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "norg", "neorg" },
+        callback = function()
+          if pcall(vim.treesitter.start) then
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
       })
     end,
   },
