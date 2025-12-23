@@ -24,3 +24,9 @@ vim.api.nvim_set_keymap(
   "<Plug>(neorg.qol.todo-items.todo.task-cycle)", -- The Neorg plug key
   { noremap = false, silent = true } -- `noremap` must be false to allow `<Plug>` mappings
 )
+
+-- to fix html shiftwidth
+vim.opt_local.shiftwidth = 2
+vim.opt_local.tabstop = 2
+vim.opt_local.softtabstop = 2
+vim.opt_local.expandtab = true -- Use spaces, not tabs
