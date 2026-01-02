@@ -4,7 +4,7 @@ return {
     opts = {
       filetypes = { "*" },
       user_default_options = {
-        mode = "foreground",
+        mode = "background",
         names = true, -- "blue", "red", etc.
         RGB = true,
         RRGGBB = true,

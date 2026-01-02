@@ -8,13 +8,11 @@ return {
       "html",
       "css",
       "lua",
-      "norg",
       "latex",
       "scss",
       "svelte",
       "typst",
       "vue",
-      "org",
       -- add any other *always wanted* parsers here
     })
   end,
