@@ -21,3 +21,11 @@ vim.cmd([[
     autocmd BufWinEnter ?* silent! loadview
   augroup END
 ]])
+
+-- clear snacks image cache on every startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local cache_dir = vim.fn.stdpath("cache") .. "/snacks/image"
+    vim.fn.delete(cache_dir, "rf")
+  end,
+})
