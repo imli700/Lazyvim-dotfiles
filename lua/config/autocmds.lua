@@ -3,7 +3,7 @@
 -- Add any additional autocmds here
 
 -- Set local options for norg files
-vim.cmd("autocmd FileType norg setlocal spell wrap")
+vim.cmd("autocmd FileType org setlocal spell wrap")
 
 -- Remove 'c', 'r', and 'o' from formatoptions for norg files
 vim.cmd([[
