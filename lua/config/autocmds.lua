@@ -29,3 +29,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.fn.delete(cache_dir, "rf")
   end,
 })
+
+-- disables default formatting to stop orgmode heading creation
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "org",
+  callback = function()
+    vim.opt_local.formatoptions:remove("r")
+  end,
+})
