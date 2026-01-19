@@ -13,3 +13,16 @@ vim.api.nvim_set_keymap("n", "n", "n", {})
 vim.api.nvim_set_keymap("n", "N", "N", {})
 vim.api.nvim_set_keymap("x", "n", "n", {})
 vim.api.nvim_set_keymap("x", "N", "N", {})
+
+-- Simple manual toggle if orgmode's native one fails
+vim.keymap.set("n", "<leader>cc", function()
+  local line = vim.api.nvim_get_current_line()
+  if line:match("%[ %]") then
+    line = line:gsub("%[ %]", "[X]", 1)
+  elseif line:match("%[X%]") then
+    line = line:gsub("%[X%]", "[ ]", 1)
+  elseif line:match("%[%-%]") then
+    line = line:gsub("%[%-%]", "[X]", 1)
+  end
+  vim.api.nvim_set_current_line(line)
+end, { desc = "Force toggle checkbox" })
