@@ -30,10 +30,18 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- disables default formatting to stop orgmode heading creation
+-- disable automatic org heading continuation
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "org",
   callback = function()
-    vim.opt_local.formatoptions:remove("r")
+    -- Make sure formatoptions doesn’t re-add any list/heading continuations
+    vim.opt_local.formatoptions:remove({ "r", "o" })
+
+    -- Remap in org buffers: behave like default o/O (open line + go to insert)
+    vim.keymap.set("n", "o", "o", { buffer = true, silent = true })
+    vim.keymap.set("n", "O", "O", { buffer = true, silent = true })
+
+    -- Ensure <CR> just inserts a newline (no extra plugin logic)
+    vim.keymap.set("n", "<CR>", "i<CR><Esc>", { buffer = true, silent = true })
   end,
 })
