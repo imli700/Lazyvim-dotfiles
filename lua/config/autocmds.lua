@@ -34,14 +34,15 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "org",
   callback = function()
-    -- Make sure formatoptions doesn’t re-add any list/heading continuations
-    vim.opt_local.formatoptions:remove({ "r", "o" })
+    -- 1. Disable flags that auto-create stars on Enter (r), o/O (o), or Wrap (c)
+    vim.opt_local.formatoptions:remove({ "r", "o", "c" })
 
-    -- Remap in org buffers: behave like default o/O (open line + go to insert)
+    -- 2. Clear what Neovim considers a comment so it doesn't see '*' as a leader
+    vim.opt_local.comments = ""
+
+    -- 3. Your manual overrides to force default behavior
     vim.keymap.set("n", "o", "o", { buffer = true, silent = true })
     vim.keymap.set("n", "O", "O", { buffer = true, silent = true })
-
-    -- Ensure <CR> just inserts a newline (no extra plugin logic)
     vim.keymap.set("n", "<CR>", "i<CR><Esc>", { buffer = true, silent = true })
   end,
 })
