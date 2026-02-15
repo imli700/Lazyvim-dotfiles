@@ -35,36 +35,38 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "org",
   callback = function()
-    -- --- PART 1: Your Existing Config (Format Options & Normal Mode) ---
-
-    -- 1. Disable flags that auto-create stars on Enter (r), o/O (o), or Wrap (c)
+    -- --- PART 1: Your Existing Config ---
     vim.opt_local.formatoptions:remove({ "r", "o", "c" })
-
-    -- 2. Clear what Neovim considers a comment so it doesn't see '*' as a leader
     vim.opt_local.comments = ""
-
-    -- 3. Your manual overrides for Normal Mode
     vim.keymap.set("n", "o", "o", { buffer = true, silent = true })
     vim.keymap.set("n", "O", "O", { buffer = true, silent = true })
-    -- Note: This 'n' map triggers 'i<CR>', which will use the custom insert map below!
     vim.keymap.set("n", "<CR>", "i<CR><Esc>", { buffer = true, silent = true })
 
     -- --- PART 2: The Fix for List Indentation (Insert Mode) ---
-
     vim.keymap.set("i", "<CR>", function()
-      local line = vim.api.nvim_get_current_line()
+      local current_line = vim.api.nvim_get_current_line()
+      local row = vim.api.nvim_win_get_cursor(0)[1]
 
-      -- Regex checks if line starts with whitespace + hyphen + space (e.g., "  - ")
-      if line:match("^%s*-%s") then
-        -- It is a List:
-        -- 1. Get the indentation of the hyphen itself (e.g., "  ")
-        local hyphen_indent = line:match("^(%s*)")
+      -- Get previous line (handle edge case if we are on first line)
+      local prev_line = (row > 1) and vim.api.nvim_buf_get_lines(0, row - 2, row - 1, false)[1] or ""
 
-        -- 2. Return Newline + CTRL-U (clear auto-indent) + Hyphen Indent
-        return "\r\021" .. hyphen_indent
+      -- Pattern to detect a list item (whitespace + hyphen + space)
+      local list_pattern = "^%s*-%s"
+
+      -- LOGIC:
+      -- 1. If CURRENT line is a list item: Align to hyphen.
+      -- 2. If CURRENT line is empty/whitespace AND PREVIOUS line was a list item: Align to hyphen.
+
+      if current_line:match(list_pattern) then
+        local indent = current_line:match("^(%s*)")
+        return "\r\021" .. indent
+      elseif current_line:match("^%s*$") and prev_line:match(list_pattern) then
+        -- We are on a blank line, but the line above was a list.
+        -- Steal the indentation from the previous line.
+        local indent = prev_line:match("^(%s*)")
+        return "\r\021" .. indent
       else
-        -- It is a Heading or Paragraph:
-        -- Return standard Enter (keeps the "Smart Indent" you like for headings)
+        -- For Headings or regular paragraphs, do standard behavior
         return "\r"
       end
     end, { buffer = true, expr = true })
