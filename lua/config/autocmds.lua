@@ -35,39 +35,50 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "org",
   callback = function()
-    -- --- PART 1: Your Existing Config ---
+    -- 1. Aggressively disable internal auto-indenting
+    vim.opt_local.indentexpr = ""
+    vim.opt_local.smartindent = false
+    vim.opt_local.autoindent = false
     vim.opt_local.formatoptions:remove({ "r", "o", "c" })
     vim.opt_local.comments = ""
+
+    -- 2. Normal mode overrides
     vim.keymap.set("n", "o", "o", { buffer = true, silent = true })
     vim.keymap.set("n", "O", "O", { buffer = true, silent = true })
     vim.keymap.set("n", "<CR>", "i<CR><Esc>", { buffer = true, silent = true })
 
-    -- --- PART 2: The Fix for List Indentation (Insert Mode) ---
+    -- 3. Insert mode: Fixed Logic (keeps behavior, avoids <C-u> issues)
     vim.keymap.set("i", "<CR>", function()
       local current_line = vim.api.nvim_get_current_line()
-      local row = vim.api.nvim_win_get_cursor(0)[1]
+      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 
-      -- Get previous line (handle edge case if we are on first line)
-      local prev_line = (row > 1) and vim.api.nvim_buf_get_lines(0, row - 2, row - 1, false)[1] or ""
+      -- Safe fetch for previous line: returns string, not table
+      local prev_lines = (row > 1) and vim.api.nvim_buf_get_lines(0, row - 2, row - 1, false) or {}
+      local prev_line = prev_lines[1] or ""
 
-      -- Pattern to detect a list item (whitespace + hyphen + space)
-      local list_pattern = "^%s*-%s"
+      -- REQUIRE a real list marker: hyphen followed by at least one space
+      local list_pattern = "^%s*-%s+"
 
-      -- LOGIC:
-      -- 1. If CURRENT line is a list item: Align to hyphen.
-      -- 2. If CURRENT line is empty/whitespace AND PREVIOUS line was a list item: Align to hyphen.
+      -- Helper to get leading whitespace
+      local get_indent = function(str)
+        return str:match("^(%s*)") or ""
+      end
 
+      local tc = function(keys)
+        return vim.api.nvim_replace_termcodes(keys, true, true, true)
+      end
+
+      -- Behavior:
+      -- * Use <CR> so the line is split at the cursor (normal enter)
+      -- * Then use <C-o>0 to run a single Normal-mode command that moves to col 0
+      --   on the new line (this is safe and won't delete text), and then
+      --   append the stolen indent string so the new line is aligned like before.
       if current_line:match(list_pattern) then
-        local indent = current_line:match("^(%s*)")
-        return "\r\021" .. indent
+        return tc("<CR><C-o>0") .. get_indent(current_line)
       elseif current_line:match("^%s*$") and prev_line:match(list_pattern) then
-        -- We are on a blank line, but the line above was a list.
-        -- Steal the indentation from the previous line.
-        local indent = prev_line:match("^(%s*)")
-        return "\r\021" .. indent
+        return tc("<CR><C-o>0") .. get_indent(prev_line)
       else
-        -- For Headings or regular paragraphs, do standard behavior
-        return "\r"
+        return tc("<CR>")
       end
     end, { buffer = true, expr = true })
   end,
