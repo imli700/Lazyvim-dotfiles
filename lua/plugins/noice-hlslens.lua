@@ -14,12 +14,15 @@ return {
       require("hlslens").setup({
         virt_text_pos = "inline",
         fmt_string = " [%s/%s] ",
+
+        -- This native option completely removes all [N 2] / [2N 1] indicators from other lines
+        nearest_only = true,
       })
 
-      -- Creates a distinct, framed layout that instantly pops away from regular code lines
+      -- Your preferred high-contrast slate blue indicator style
       local distinct_indicator = {
-        fg = "#ffffff", -- Sharp, highly readable white text
-        bg = "#2e3b4e", -- Muted dark slate blue background block
+        fg = "#ffffff", -- Sharp white text
+        bg = "#2e3b4e", -- Slate blue background block
         force = true,
       }
 
