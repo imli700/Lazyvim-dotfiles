@@ -30,16 +30,30 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
+-- Define a function globally so Neovim's `v:lua` can access it during indent calculations
+_G.org_indent_logic = function()
+  local line = vim.fn.getline(vim.v.lnum)
+  -- If the line starts with one or more asterisks followed by a space, it's a heading: force 0 indent
+  if line:match("^%*+%s") then
+    return 0
+  end
+  -- Otherwise, keep current indentation (return -1)
+  return -1
+end
+
 -- disable automatic org heading continuation
 -- Combined Org Mode Configuration
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "org",
   callback = function()
-    -- 1. Aggressively disable internal auto-indenting
-    vim.opt_local.indentexpr = ""
+    -- 1. Use our custom explicit logic for the '=' operator
+    vim.opt_local.indentexpr = "v:lua.org_indent_logic()"
     vim.opt_local.smartindent = false
     vim.opt_local.autoindent = false
-    vim.opt_local.formatoptions:remove({ "r", "o", "c" })
+
+    -- Added "t", "q", and "n" based on the suggestion to stop Neovim from
+    -- trying to format numbered/bulleted lists natively
+    vim.opt_local.formatoptions:remove({ "t", "c", "r", "q", "n", "o" })
     vim.opt_local.comments = ""
 
     -- 2. Normal mode overrides
