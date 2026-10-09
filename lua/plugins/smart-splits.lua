@@ -1,11 +1,11 @@
 return {
   "mrjones2014/smart-splits.nvim",
-  -- This is the crucial line that fixes the issue.
-  -- It tells LazyVim to load this plugin on startup.
   lazy = false,
   opts = {
-    -- Keep the 'stop' behavior at the edge of Neovim splits
-    at_edge = "stop",
+    move = {
+      -- Keep the 'stop' behavior at the edge of Neovim splits
+      at_edge = "stop",
+    },
   },
   keys = {
     {
