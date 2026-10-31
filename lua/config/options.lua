@@ -8,10 +8,6 @@ opt.linebreak = true -- Makes sure wraps don't break in-between words
 opt.breakindent = true -- Make sure indentation of wrapped lined matches indentation of oringal line
 opt.title = true
 
--- let tree_sitter handle folds
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 -- Enable terminal transparency
 vim.cmd([[
     highlight Normal ctermbg=none guibg=none

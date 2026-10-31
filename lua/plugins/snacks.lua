@@ -4,18 +4,19 @@ return {
     image = {
       enabled = true,
       doc = {
-        inline = true, -- Best attempt at keeping it inline
-        float = true,
-        max_width = 60,
+        inline = true,
+        float = false, -- MUST be false to stop the hover ghosting/overlapping
+        max_width = 70,
+      },
+      math = {
+        latex = {
+          font_size = "normalsize", -- Options: "small", "normalsize", "large", "Large"
+        },
       },
       convert = {
         magick = {
-          -- CORRECT ORDER:
-          -- 1. -density (BEFORE src): Sets high resolution so it's crisp, not blurry.
-          -- 2. {src}[0]: Loads the LaTeX PDF.
-          -- 3. -trim: Cuts off white space.
-          -- 4. -resize (AFTER src): Shrinks the crisp image to % size.
-          math = { "-density", "200", "{src}[0]", "-trim", "-resize", "70%" },
+          -- Revert to standard trimming without arbitrary -resize scaling
+          math = { "-density", "192", "{src}[0]", "-trim" },
         },
       },
     },

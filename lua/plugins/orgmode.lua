@@ -20,15 +20,28 @@ return {
   },
 
   -- 2. Setup Autocompletion (Add 'orgmode' source to nvim-cmp)
+  -- {
+  -- "hrsh7th/nvim-cmp",
+  -- dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-path" }, -- Standard deps just in case
+  -- opts = function(_, opts)
+  -- opts.sources = opts.sources or {}
+  -- table.insert(opts.sources, { name = "orgmode" })
+  -- end,
+  -- },
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-buffer", "hrsh7th/cmp-path" }, -- Standard deps just in case
+    "saghen/blink.cmp",
     opts = function(_, opts)
       opts.sources = opts.sources or {}
-      table.insert(opts.sources, { name = "orgmode" })
+      opts.sources.default = opts.sources.default or {}
+      table.insert(opts.sources.default, "orgmode")
+      opts.sources.providers = opts.sources.providers or {}
+      opts.sources.providers.orgmode = {
+        name = "Orgmode",
+        module = "orgmode.org.autocompletion.blink",
+        fallbacks = { "buffer" },
+      }
     end,
   },
-
   -- 3. Setup Image Support (For inline images)
   {
     "3rd/image.nvim",
@@ -53,19 +66,19 @@ return {
     ft = { "org" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "hrsh7th/nvim-cmp",
+      -- "hrsh7th/nvim-cmp",
       "nvim-orgmode/org-bullets.nvim",
     },
     config = function()
       require("orgmode").setup({
         -- Paths for Agenda and Capture
         org_agenda_files = {
-          "~/Documents/zettelkasten-notes/top/**/*",
-          "~/Documents/zettelkasten-notes/cs50/**/*",
-          "~/Documents/zettelkasten-notes/5th-sem/projects/**/*",
-          "~/Documents/zettelkasten-notes/6th-sem/artificialCognitiveSystem/**/*",
-          "~/Documents/zettelkasten-notes/6th-sem/iotAndSmartSensors/**/*",
-          "~/Documents/zettelkasten-notes/6th-sem/elective/**/*",
+          "~/Documents/zettelkasten-notes/top/**/*.org",
+          "~/Documents/zettelkasten-notes/cs50/**/*.org",
+          "~/Documents/zettelkasten-notes/5th-sem/projects/**/*.org",
+          "~/Documents/zettelkasten-notes/6th-sem/artificialCognitiveSystem/**/*.org",
+          "~/Documents/zettelkasten-notes/6th-sem/iotAndSmartSensors/**/*.org",
+          "~/Documents/zettelkasten-notes/6th-sem/elective/**/*.org",
         },
         org_default_notes_file = "~/Documents/zettelkasten-notes/top/refile.org",
 
