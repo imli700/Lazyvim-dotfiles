@@ -84,7 +84,7 @@ return {
 
         -- Visuals & Syntax
         org_hide_emphasis_markers = true, -- Like concealer
-        org_startup_indented = true,
+        org_startup_indented = false,
         org_todo_keywords = { "TODO", "NEXT", "|", "DONE", "CANCELLED" },
 
         -- LaTeX Support
